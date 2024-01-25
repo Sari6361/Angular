@@ -1,0 +1,110 @@
+<div class="card" *ngIf="student">
+    <div class="card-body">
+        <form [formGroup]="StudentForm">
+
+            <div class="form-group">
+                <label class="control-label" for="name">Student Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+                <ng-container *ngIf="StudentForm.controls['name'].errors else validy ">
+                    <br>
+                    <div class="alert alert-danger" *ngIf="StudentForm.controls['name'].errors['required']">
+                        Please fill out this field.
+                    </div>
+                    <div class="alert alert-danger" *ngIf="StudentForm.controls['name'].errors['minlength']">
+                        This field is must be at least 5 chars.
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="adress">Student Adress:</label>
+                <input type="text" class="form-control" id="adress" formControlName="adress">
+                <ng-container *ngIf="StudentForm.controls['adress'].errors else validy ">
+                    <br>
+                    <div class="alert alert-danger" *ngIf="StudentForm.controls['adress'].errors['required']">
+                        Please fill out this field.
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="phone_number">Student Phone:</label>
+                <input type="text" class="form-control" id="phone_number" formControlName="phone_number">
+                <ng-container *ngIf="StudentForm.controls['phone_number'].errors else validy ">
+                    <div class="alert alert-danger" *ngIf="StudentForm.controls['phone_number'].errors['maxlength']">
+                        This field is must be maximum 10 chars.
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="avg_marks">Student Avg:</label>
+                <input type="text" class="form-control" id="avg_marks" formControlName="avg_marks">
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label class="control-label" for="avg_marks">Student Course: </label>
+                <select class="form-control" formControlName="course_id">
+                    <option selected disabled>Choose Course...</option>
+                    <option *ngFor="let course of Courses" [value]="course.id">{{course.courseName}}</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div class="form-group ">
+                <label class="control-label" for="year">Student Year:</label>
+                <br>
+                <input class="radio" type="radio" name="year" formControlName="year" value="yearType.YearA"> YearA
+                <br>
+                <input class="radio" type="radio" name="year" formControlName="year" value="yearType.YearB"> YearB
+                <br>
+                <input class="radio" type="radio" name="year" formControlName="year" value="yearType.YearC"> YearC
+            </div>
+
+            <br>
+            
+            <div class="form-group ">
+                <label class="control-label" for="active">Student Active:</label>
+                <br>
+                <input class="radio" type="radio" name="active" formControlName="active" value="true"> True
+                <br>
+                <input class="radio" type="radio" name="active" formControlName="active" value="false"> False
+            </div>
+
+            <br>
+            
+            <div [ngSwitch]="StudentForm.controls['year'].value">
+                <div *ngSwitchCase="'yearType.YearA'" class="div_switch">
+                    The course include 125 days
+                </div>
+                <div *ngSwitchCase="'yearType.YearB'" class="div_switch">
+                    The course include 220 days
+                </div>
+                <div *ngSwitchCase="'yearType.YearC'" class="div_switch">
+                    The course include 30 days
+                </div>
+            </div>
+
+            <br>
+            
+            <form #form="ngForm">
+                <h1 style="font-weight: bold;"> Total Absent days {{missedDays}}</h1>
+                <div class="form-group">
+                    <label class="control-label" for="date">select the date you was absent</label>
+                    <input id="date" class="form-control" type="date" name="date" [(ngModel)]="obsenceDate" />
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="count">Number of absent days</label>
+                    <input id="count" class="form-control" type="number" name="count" [(ngModel)]="obsenceCount" />
+                </div>
+            </form>
+            <br>
+            <button class="btn btn-primary" (click)="save()" [disabled]="StudentForm.invalid">Save</button>
+        </form>
+    </div>
+</div>
+<ng-template #validy><span style="color: green;font-size: medium;"> Valid.<br> </span></ng-template>

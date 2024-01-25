@@ -1,0 +1,14 @@
+<div *ngIf="student">
+    <p class="row">Avg Mark: {{avg}}</p>
+    <br>
+    <p>History Exams:</p>
+    <ul class="list-group">
+        <li *ngFor="let e of student.exams" class="list-group-item">
+            <div class="row">
+                <div class="col-1">Id:{{e.id}}</div>
+                <div class="col-3">On: {{e.description}}</div>
+                <div class="col-3">Date {{e.date.getDay()}}.{{e.date.getMonth()}}.{{e.date.getFullYear()}}</div>
+            </div>
+        </li>
+    </ul>
+</div>
