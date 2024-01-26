@@ -24,20 +24,23 @@ export class StudentListComponent {
 
   showAdd() {
     this.student = new Student();
-    this.student.active=true;
+    this.student.active = true;
   }
 
-    show(student: Student) {
+  show(student: Student) {
     this.onSelectStudent.emit(student);
     var x = this._studentService.sumAbsentDaysById(this.student.id);
     this.absentDays = numberAttribute(x);
     this.student = student;
   }
 
-   getAbsentService(id: number) {
-    console.log("student",this.student)
-    var x =  this._studentService.sumAbsentDaysById(this.student.id);
-    this.absentDays =numberAttribute(x);
+  getAbsentService(id: number) {
+    // console.log("id:",id);
+    this._studentService.sumAbsentDaysById(id).then(data => {
+      this.absentDays = data;
+      // console.log(this.absentDays)
+      return this.absentDays;
+    });
   }
 
   save(student: Student) {
@@ -56,22 +59,22 @@ export class StudentListComponent {
 
 
   //observable
-name:String;
-  sendName(name:String)
-  {
-    this.name=name;
+  name: String;
+  sendName(name: String) {
+    this.name = name;
   }
 
 
 
 
   constructor(private _studentService: studentService) {
-
-  }
-  ngOnInit(): void {
-    this._studentService.getStudentSlowly().then(data => {
+    _studentService.getStudentSlowly().then(data=> {
+      console.log("onInit",data);
       this.students = data;
     });
+  }
+  ngOnInit(): void {
+
   }
 
 }

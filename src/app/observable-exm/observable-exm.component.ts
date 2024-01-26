@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, map } from 'rxjs';
 import { Student } from '../Entities/student.model';
 import { STUDENTS } from '../student.service';
 
@@ -29,22 +29,22 @@ export class ObservableExmpleComponent implements OnInit {
     }, 1000)
   });
 
-  // timer2: Observable<Date>=interval(1000).pipe(map(timer=>new Date()));
-  // @Input()
-  // name: String;
+  timer2: Observable<Date>=interval(1000).pipe(map(timer=>new Date()));
+  @Input()
+  name: String;
 
-  // students_names: String[];
-  // source: Observable<String> = new Observable((observer) => {
-  //   if (this.name) {
-  //     observer.next(this.name);
-  //     this.name = null;
-  //   }
-  // })
+  students_names: String[];
+  source: Observable<String> = new Observable((observer) => {
+    if (this.name) {
+      observer.next(this.name);
+      this.name = null;
+    }
+  })
 
   constructor() {
-    // this.source.subscribe((val) => {
-    //   this.students_names.push(val);
-    // });
+    this.source.subscribe((val) => {
+      this.students_names.push(val);
+    });
   }
   ngOnInit(): void {
   }

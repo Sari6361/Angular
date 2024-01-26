@@ -26,6 +26,6 @@ export class AppComponent {
    
    chooseStudent(s: Student) {
       this.student = s;
-      console.log(this.student);
+      // console.log(this.student);
    }
 }
