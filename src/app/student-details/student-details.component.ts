@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Student } from '../Entities/student.model';
 import { APP_COURSES, CourseStudy } from '../Entities/CourseStudy.model';
 import { Year } from '../Entities/Enum.model';
-import { Exam } from '../Entities/Exam.model';
 import { Obsence } from '../Entities/Obsence.model';
 
 @Component({
@@ -21,7 +20,7 @@ export class StudentDetailsComponent {
   obsenceCount: number = 0;
 
   @Input()
-  missedDays:number;
+  missedDays: number;
 
   //כאשר נבחר תלמיד להוספה או לעידכון נצייר את הטופס
   private _student?: Student;
@@ -35,12 +34,12 @@ export class StudentDetailsComponent {
     this._student = value;
     if (this.student != undefined)
       this.StudentForm = new FormGroup({
-        "id": new FormControl(),
+        "id": new FormControl(this.student.id),
         "name": new FormControl(this.student.name, [Validators.required, Validators.minLength(5)]),
         "adress": new FormControl(this.student.adress, Validators.required),
         "phone_number": new FormControl(this.student.phone_number, Validators.maxLength(10)),
         "avg_marks": new FormControl(this.student.avg_marks),
-        "living": new FormControl(this.student.living, Validators.required),
+        "living": new FormControl(this.student.living),
         "course_id": new FormControl(this.student.course_id),
         "year": new FormControl(this.student.year),
         "active": new FormControl(this.student.active),
@@ -52,9 +51,9 @@ export class StudentDetailsComponent {
   //לאחר השמירה נעורר ארוע כדי להדפיס הודעה למסך
   @Output()
   afterAdding: EventEmitter<Student> = new EventEmitter();
- 
+
   @Output()
-  addName:EventEmitter<String>=new EventEmitter();
+  addName: EventEmitter<String> = new EventEmitter();
 
   //אובייקט שמייצג את הטופס
   StudentForm: FormGroup = new FormGroup({});

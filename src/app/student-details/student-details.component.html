@@ -45,7 +45,7 @@
             <br>
 
             <div class="form-group">
-                <label class="control-label" for="avg_marks">Student Course: </label>
+                <label class="control-label" for="course_id">Student Course: </label>
                 <select class="form-control" formControlName="course_id">
                     <option selected disabled>Choose Course...</option>
                     <option *ngFor="let course of Courses" [value]="course.id">{{course.courseName}}</option>
@@ -106,6 +106,5 @@
             <button class="btn btn-primary" (click)="save()" [disabled]="StudentForm.invalid">Save</button>
         </form>
     </div>
-    hi!!!!
 </div>
 <ng-template #validy><span style="color: green;font-size: medium;"> Valid.<br> </span></ng-template>

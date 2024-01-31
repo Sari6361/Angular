@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output, numberAttribute } from '@angular/core';
 import { Student } from '../Entities/student.model';
 import { studentService } from '../student.service';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'app-student-list',
@@ -28,27 +27,29 @@ export class StudentListComponent {
   }
 
   show(student: Student) {
+
     this.onSelectStudent.emit(student);
-    var x = this._studentService.sumAbsentDaysById(this.student.id);
+    var x: number;
+    //  x = this._studentService.sumAbsentDaysById(this.student.id);
     this.absentDays = numberAttribute(x);
     this.student = student;
   }
 
   getAbsentService(id: number) {
-    // console.log("id:",id);
     this._studentService.sumAbsentDaysById(id).then(data => {
       this.absentDays = data;
-      // console.log(this.absentDays)
       return this.absentDays;
     });
   }
 
   save(student: Student) {
     let s = this.students.findIndex(s => s.id == student.id)
-    if (s)
-      this.students.slice(s, 1);
-    student.id = this.students.length + 1;
-    this.students.push(student);
+    if (s!=-1)
+      this.students[s]=student;
+    else{
+      student.id = this.students.length + 1;
+      this.students.push(student);
+    }
     this.student = null;
     this.absentDays = 0;
   }
@@ -57,19 +58,14 @@ export class StudentListComponent {
     alert(`הוספת בהצלחה את ` + student.name)
   }
 
-
   //observable
   name: String;
   sendName(name: String) {
     this.name = name;
   }
 
-
-
-
   constructor(private _studentService: studentService) {
-    _studentService.getStudentSlowly().then(data=> {
-      console.log("onInit",data);
+    _studentService.getStudentSlowly().then(data => {
       this.students = data;
     });
   }
