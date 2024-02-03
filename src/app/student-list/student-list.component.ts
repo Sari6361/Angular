@@ -18,6 +18,8 @@ export class StudentListComponent {
 
   DeleteStudent(student: Student) {
     let index_to_delete = this.students.findIndex(s => s.id == student.id);
+    console.log(index_to_delete);
+
     this.students.splice(index_to_delete, 1);
   }
 
@@ -29,24 +31,25 @@ export class StudentListComponent {
   show(student: Student) {
 
     this.onSelectStudent.emit(student);
-    var x: number;
-    //  x = this._studentService.sumAbsentDaysById(this.student.id);
+    var x;
+    // = this._studentService.sumAbsentDaysById(this.student.id);
     this.absentDays = numberAttribute(x);
     this.student = student;
   }
 
-  getAbsentService(id: number) {
-    this._studentService.sumAbsentDaysById(id).then(data => {
-      this.absentDays = data;
-      return this.absentDays;
+  async getAbsentService(id: number) {
+    await this._studentService.sumAbsentDaysById(id).then(data => {
+      return data;
+    }).catch(() => {
+      console.log();
     });
   }
 
   save(student: Student) {
     let s = this.students.findIndex(s => s.id == student.id)
-    if (s!=-1)
-      this.students[s]=student;
-    else{
+    if (s != -1)
+      this.students[s] = student;
+    else {
       student.id = this.students.length + 1;
       this.students.push(student);
     }
@@ -65,12 +68,17 @@ export class StudentListComponent {
   }
 
   constructor(private _studentService: studentService) {
-    _studentService.getStudentSlowly().then(data => {
-      this.students = data;
-    });
+
   }
   ngOnInit(): void {
-
+    // this._studentService.getStudentSlowly().then((data)=>{
+    //   this.students = data
+    // this.students.map((s)=>{this._studentService.sumAbsentDaysById(s.id).then((res)=>{s['absent'] = res})})
+    // })    
+    this._studentService.getStudentsFromServer().subscribe((data) => {
+      this.students = data;
+      this.students.map((s) => { this._studentService.sumAbsentDaysById(s.id).then((res) => { s['absent'] = res }) })
+    })
   }
 
 }

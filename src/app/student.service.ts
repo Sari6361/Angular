@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Student } from "./Entities/student.model";
 import { Year } from "./Entities/Enum.model";
-
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 export const STUDENTS: Student[] = [
     {
         id: 1, name: "Yosef Choen", adress: "Rashi", departureDate: new Date(10, 12, 2222), phone_number: "0556766361", active: false, avg_marks: 98, living: 8,
@@ -60,9 +61,12 @@ export class studentService {
     getStudentSlowly(): Promise<Student[]> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                 resolve(STUDENTS); 
-                }, 100);
+                resolve(STUDENTS);
+            }, 100);
         })
+    }
+    getStudentsFromServer():Observable<Student[]> {
+        return this._http.get<Student[]>(`http://localhost:5207/api/Studens`);
     }
 
     getStudentAvgById(id: number): Promise<number> {
@@ -84,4 +88,10 @@ export class studentService {
             res(sum);
         });
     }
+    constructor(private _http: HttpClient) {
+
+    }
+    ngOnInit(): void {
+    }
+
 }
