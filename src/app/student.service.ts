@@ -66,7 +66,7 @@ export class studentService {
         })
     }
     getStudentsFromServer():Observable<Student[]> {
-        return this._http.get<Student[]>(`http://localhost:5207/api/Studens`);
+        return this._http.get<Student[]>(`/api/Studens`);
     }
 
     getStudentAvgById(id: number): Promise<number> {

@@ -1,4 +1,6 @@
-<div> 
+<div>
+    <input type="checkbox" #chb (change)="sowStudentsActive(chb.checked)">
+    <br>
     <ul class="list-group">
         <li *ngFor="let student of students" class="list-group-item"
             [ngClass]="{ 'list-group-item-success':student.avg_marks >90,'list-group-item-danger': student.active}">
@@ -7,8 +9,8 @@
                 <div class="col-1">Id:{{student.id}}</div>
                 <div class="col-2">Name: {{student.name}}</div>
                 <div class="col-2">lived in {{student.adress}}</div>
-                <div class="col-2">Absent days {{student['absent']}}</div> 
-                 <!-- <div class="col-2">Absent days {{getAbsentService(1) | async}}</div>  -->
+                <div class="col-2">Absent days {{student['absent']}}</div>
+                <!-- <div class="col-2">Absent days {{getAbsentService(1) | async}}</div>  -->
                 <!-- <div class="col-2">Absent days {{getAbsentService(student.id)}}</div> -->
                 <div class="col-2">
                     <button class="btn btn-primary" (click)="DeleteStudent(student)">Delete</button>
@@ -24,6 +26,7 @@
 <button (click)="showAdd()" class="btn btn-primary">Add Student</button>
 <br>
 <br>
-<app-student-details (onSaveNewStudent)="save($event)" (afterAdding)="ShowMsgSecuss($event)" (addName)="sendName($event)" [student]="student" [missedDays]="absentDays"/>
+<app-student-details (onSaveNewStudent)="save($event)" (afterAdding)="ShowMsgSecuss($event)"
+    (addName)="sendName($event)" [student]="student" [missedDays]="absentDays" />
 <app-observable-exm [name]="name"></app-observable-exm>
 <!-- <app-history-exams [student]="student"></app-history-exams> -->

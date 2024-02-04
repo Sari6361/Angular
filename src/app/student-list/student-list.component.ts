@@ -66,7 +66,9 @@ export class StudentListComponent {
   sendName(name: String) {
     this.name = name;
   }
+  sowStudentsActive() {
 
+  }
   constructor(private _studentService: studentService) {
 
   }
@@ -77,6 +79,7 @@ export class StudentListComponent {
     // })    
     this._studentService.getStudentsFromServer().subscribe((data) => {
       this.students = data;
+      console.log(data);
       this.students.map((s) => { this._studentService.sumAbsentDaysById(s.id).then((res) => { s['absent'] = res }) })
     })
   }
