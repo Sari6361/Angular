@@ -1,6 +1,7 @@
 <div>
-    <input type="checkbox" #chb (change)="sowStudentsActive(chb.checked)">
-    <br>
+    <br />
+    <input type="checkbox" #chb (change)="showActiveStudents(chb.checked)" /> Show Active <br />
+    <input type="text" placeholder="search by name" [(ngModel)]="nameToSearch" (input)="getStudentsByName()"/>
     <ul class="list-group">
         <li *ngFor="let student of students" class="list-group-item"
             [ngClass]="{ 'list-group-item-success':student.avg_marks >90,'list-group-item-danger': student.active}">
@@ -24,6 +25,7 @@
 </div>
 <br>
 <button (click)="showAdd()" class="btn btn-primary">Add Student</button>
+<button (click)="saveStudentToServer()" class="btn btn-success">Save Student (server)</button>
 <br>
 <br>
 <app-student-details (onSaveNewStudent)="save($event)" (afterAdding)="ShowMsgSecuss($event)"

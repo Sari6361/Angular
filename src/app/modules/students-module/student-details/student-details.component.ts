@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Student } from '../Entities/student.model';
-import { APP_COURSES, CourseStudy } from '../Entities/CourseStudy.model';
-import { Year } from '../Entities/Enum.model';
-import { Obsence } from '../Entities/Obsence.model';
+import { Student } from '../../../Entities/student.model';
+import { APP_COURSES, CourseStudy } from '../../../Entities/CourseStudy.model';
+import { Year } from '../../../Entities/Enum.model';
+import { Obsence } from '../../../Entities/Obsence.model';
 
 @Component({
   selector: 'app-student-details',

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Exam } from '../Entities/Exam.model';
-import { Student } from '../Entities/student.model';
-import { studentService } from '../student.service';
+import { Exam } from '../../../Entities/Exam.model';
+import { Student } from '../../../Entities/student.model';
+import { studentService } from '../../../student.service';
 
 @Component({
   selector: 'app-history-exams',

@@ -65,9 +65,6 @@ export class studentService {
             }, 100);
         })
     }
-    getStudentsFromServer():Observable<Student[]> {
-        return this._http.get<Student[]>(`/api/Studens`);
-    }
 
     getStudentAvgById(id: number): Promise<number> {
         var student = STUDENTS.find(s => s.id == id);
@@ -88,6 +85,37 @@ export class studentService {
             res(sum);
         });
     }
+    //Server
+    getStudentsFromServer(): Observable<Student[]> {
+        return this._http.get<Student[]>(`api/Studens`);
+    }
+
+    getActiveStudentsFromServer(active: boolean): Observable<Student[]> {
+        return this._http.get<Student[]>(`api/Students/?active=` + active);
+    }
+
+    getStudentByName(name: string) {
+        if (name == '')
+            return this.getStudentsFromServer();
+        return this._http.get<Student[]>(`api/Students/name=` + name);
+    }
+
+    saveStudentsToServer(students: Student[]): Observable<boolean> {
+        return this._http.post<boolean>(`api/Students`, students);
+    }
+
+    updateStudentInServer(student: Student): Observable<boolean> {
+        return this._http.put<boolean>(`api/Students/${student.id}`, student);
+    }
+    
+    addStudentServer(student: Student): Observable<boolean> {
+        return this._http.post<boolean>(`api/Students`, student);
+    }
+
+    deleteStudent(id: number): Observable<boolean> {
+        return this._http.delete<boolean>(`api/Students/${id}`)
+    }
+
     constructor(private _http: HttpClient) {
 
     }

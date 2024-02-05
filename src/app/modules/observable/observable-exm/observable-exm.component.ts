@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, interval, map, filter, from } from 'rxjs';
-import { Student } from '../Entities/student.model';
-import { STUDENTS } from '../student.service';
+import { Student } from '../../../Entities/student.model';
+import { STUDENTS } from '../../../student.service';
 
 @Component({
   selector: 'app-observable-exm',
